@@ -121,7 +121,7 @@ function TopicList() {
          }
          return (
            <>
-           <Accordian category={category} topics={state[idx].topics}/>
+           <Accordian key={idx} category={category} topics={state[idx].topics}/>
            </>
          )
        })

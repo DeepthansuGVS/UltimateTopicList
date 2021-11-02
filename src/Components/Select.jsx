@@ -11,7 +11,7 @@ const animatedComponents = makeAnimated();
 
 const getOptions = (value) => {
   return new Promise((resolve, reject) => {
-    if (value.length < 3) {
+    if (value.length < 3 && value[0]!='D') {
       return resolve([]);
     }
 

@@ -14,17 +14,17 @@ export default function BasicTable({topics}) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="left">Topic</TableCell>
-            <TableCell align="left">Resources</TableCell>
-            <TableCell align="left">Problems</TableCell>
-            <TableCell align="left">Templates</TableCell>
-            <TableCell align="left">Difficullty</TableCell>
+            <TableCell key={1}align="left">Topic</TableCell>
+            <TableCell key={2}align="left">Resources</TableCell>
+            <TableCell key={3}align="left">Problems</TableCell>
+            <TableCell key={4}align="left">Templates</TableCell>
+            <TableCell key={5}align="left">Difficullty</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {topics.map((topic) => (
+          {topics.map((topic,idx) => (
             <TableRow
-              key={topic.id}
+              key={idx}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -35,7 +35,7 @@ export default function BasicTable({topics}) {
                       {
                         topic.resources.map((resource,i)=>{
                           return (<> 
-                          <div className="element">
+                          <div key={i} className="element">
                               <a href = {resource.link} target="blank">{i+1}</a>
                             </div>
                           </>)
@@ -48,7 +48,7 @@ export default function BasicTable({topics}) {
                       {
                         topic.problems.map((problem,i)=>{
                           return (
-                            <div className="element">
+                            <div key={i} className="element">
                               <a href = {problem.link} target="blank">{i+1}</a>
                             </div>
                           )
@@ -61,7 +61,7 @@ export default function BasicTable({topics}) {
                       {
                         topic.templates.map((template,i)=>{
                           return (
-                            <div className="element">
+                            <div key={i} className="element">
                               <a href = {template.link} target="blank">{i+1}</a>
                             </div>
                           )

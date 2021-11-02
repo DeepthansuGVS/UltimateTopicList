@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MultiSelect from '../Components/Select';
 import {topics_list,difficulty,categories} from './data.js';
-import Table from '../Components/Table';
-
+import Accordian from '../Components/Accordian';
+import './style.css'
 
 
 function TopicList() {
@@ -110,6 +110,7 @@ function TopicList() {
       <div className="selectWrapper">
           <MultiSelect setFilters={setFilters}/>
       </div>
+      <div className="list-container">
      {
        categories.map((category,idx)=>{
          if(state[idx].topics.length==0){
@@ -120,12 +121,12 @@ function TopicList() {
          }
          return (
            <>
-           <h3>{category}</h3>
-           <Table topics={state[idx].topics}/>
+           <Accordian category={category} topics={state[idx].topics}/>
            </>
          )
        })
      }
+     </div>
     </>
   );
 }

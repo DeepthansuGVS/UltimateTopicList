@@ -1,0 +1,28 @@
+.horizontal{
+    display:flex;
+}
+
+.element{
+    margin-right: 20px;
+}
+
+.horizontal-select{
+    display:flex;
+    justify-content: center;
+    gap:20px;
+    margin-top:30px;  
+    padding:0 10px; 
+}
+
+.select{
+    min-width:300px;
+}
+
+.async{
+    flex-grow:1
+}
+
+h3{
+    padding: 0 10px;
+}
+

@@ -10,19 +10,23 @@ function TopicList() {
 
   const [state, setState] = useState([
     {
+      title:"Basics",
+      topics:[] 
+     },
+    {
      title:"Math",
      topics:[] 
     },
     {
-      title:"NumberTheory",
+      title:"Number Theory",
       topics:[] 
      },
      {
-      title:"GraphTheory",
+      title:"Graph Theory",
       topics:[] 
      },
      {
-      title:"DataStructures",
+      title:"Data Structures",
       topics:[] 
      },
      {
@@ -38,7 +42,7 @@ function TopicList() {
       topics:[] 
      },
      {
-      title:"GameTheory",
+      title:"Game Theory",
       topics:[] 
      },
      {
@@ -107,7 +111,7 @@ function TopicList() {
 
   return (
     <>
-      <div className="selectWrapper">
+      <div className="selectWrapper"> 
           <MultiSelect setFilters={setFilters}/>
       </div>
       <div className="list-container">
@@ -118,7 +122,7 @@ function TopicList() {
              <>
              </>
            )
-         }
+         } 
          return (
            <>
            <Accordian key={idx} category={category} topics={state[idx].topics}/>

@@ -1,4 +1,5 @@
 export const topics_list = [
+    "Basics",
     "Matrix Exponentiation",
     "FFT",
     "NTT",
@@ -456,12 +457,16 @@ export const topics_list = [
 
 
 export const difficulty = [
+    0,
     1,
     2,
     3
 ];
 
 export const difficultyOptions = [
+    {
+        value:0, label:0
+    },
     {
         value:1, label:1
     },
@@ -475,16 +480,19 @@ export const difficultyOptions = [
 
 export const categoryOptions = [
     {
+        value:"Basics", label:"Basics"
+    },
+    {
         value:"Math", label:"Math"
     },
     {
-        value:"NumberTheory", label:"NumberTheory"
+        value:"Number Theory", label:"Number Theory"
     },
     {
-        value:"GraphTheory", label:"GraphTheory"
+        value:"Graph Theory", label:"Graph Theory"
     },
     {
-        value:"DataStructures", label:"DataStructures"
+        value:"Data Structures", label:"Data Structures"
     },
     {
         value:"Strings", label:"Strings"
@@ -496,7 +504,7 @@ export const categoryOptions = [
         value:"Geometry", label:"Geometry"
     },
     {
-        value:"GameTheory", label:"GameTheory"
+        value:"Game Theory", label:"Game Theory"
     },
     {
         value:"Miscelleneous", label:"Miscelleneous"
@@ -507,14 +515,15 @@ export const categoryOptions = [
 ];
 
 export const categories = [
+    "Basics",
    "Math",
-   "NumberTheory",
-   "GraphTheory",
-    "DataStructures",
+   "Number Theory",
+   "Graph Theory",
+    "Data Structures",
     "Strings",
     "DP",
     "Geometry",
-    "GameTheory",
+    "Game Theory",
     "Miscelleneous",
     "Important Links"
 ];

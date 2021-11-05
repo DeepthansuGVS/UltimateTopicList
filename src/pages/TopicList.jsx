@@ -8,6 +8,7 @@ import './style.css'
 
 function TopicList() {
 
+  const [showCategory, setShowCategory] = useState("")
   const [state, setState] = useState([
     {
       title:"Basics",
@@ -116,8 +117,9 @@ function TopicList() {
       </div>
       <div className="list-container">
      {
+
        categories.map((category,idx)=>{
-         if(state[idx].topics.length==0){
+         if(state[idx].topics.length==0 || (showCategory!="" && showCategory!=category)){
            return (
              <>
              </>
@@ -125,7 +127,7 @@ function TopicList() {
          } 
          return (
            <>
-           <Accordian key={idx} category={category} topics={state[idx].topics}/>
+           <Accordian setShowCategory = {setShowCategory} key={idx} category={category} topics={state[idx].topics}/>
            </>
          )
        })

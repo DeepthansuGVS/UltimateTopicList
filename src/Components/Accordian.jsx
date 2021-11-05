@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react'; 
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
@@ -43,12 +44,18 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-export default function CustomizedAccordions({category,topics}) {
+export default function CustomizedAccordions({category,topics,setShowCategory}) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+  
+  useEffect(() => {
+    if(expanded) setShowCategory(category)
+    else setShowCategory("")
+
+  }, [expanded])
 
   return (
     <div className="accordian">

@@ -1,0 +1,38 @@
+body {
+    text-align: center;
+  }
+  
+  input {
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    margin: 5px;
+    margin-bottom: 0px;
+    padding: 5px 10px;
+    width: 250px;
+    height: 30px;
+  }
+  
+  button {
+    height: 30px;
+    min-width: 150px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(111, 170, 247);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  button:hover {
+    background-color: rgb(128, 181, 250);
+  }
+  
+  .error {
+    color: tomato;
+    margin-bottom: 10px;
+    height: 8px;
+    font-size: 13px;
+  }

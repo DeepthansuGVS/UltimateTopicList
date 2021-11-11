@@ -3,7 +3,7 @@ import React from "react";
 import AsyncSelect from "react-select/async";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import axios from "axios";
+import axios from "../http/api.js";
 import {difficultyOptions,categoryOptions} from "../pages/data"
 //import { colourOptions } from '../data';
 
@@ -16,7 +16,7 @@ const getOptions = (value) => {
     }
 
     axios
-      .get(`https://ultimate-topic-list.herokuapp.com/topics/names?search=${value}`)
+      .get(`/topics/names?search=${value}`)
       .then((response) => {
         let data = response.data.map((element) => {
           return { value: element.title, label: element.title };

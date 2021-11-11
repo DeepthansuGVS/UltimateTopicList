@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import MultiSelect from '../Components/Select';
-import {topics_list,difficulty,categories} from './data.js';
-import Accordian from '../Components/Accordian';
+import axios from "../../http/api.js";
+import MultiSelect from '../../Components/Select';
+import {topics_list,difficulty,categories} from '../data.js';
+import Accordian from '../../Components/Accordian';
 import './style.css'
 
 
@@ -103,7 +103,7 @@ function TopicList() {
     const fetch_jobs = async () => {
       let query_string = make_query_string();
       console.log(query_string)
-      let res = await axios.get(`https://ultimate-topic-list.herokuapp.com/topics${query_string}`);
+      let res = await axios.get(`/topics/list/${query_string}`);
       console.log(res.data);
       setState(res.data);
     };

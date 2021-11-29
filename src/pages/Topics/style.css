@@ -2,3 +2,10 @@
     margin-top:40px;
     padding: 0 10px;
 }
+
+.loading{
+    margin: 200px auto;
+    height: 5%;
+    width: 5%;
+
+}

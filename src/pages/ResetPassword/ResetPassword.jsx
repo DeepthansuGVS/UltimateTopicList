@@ -1,47 +1,38 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { validateEmail } from "./utils";
 import usePasswordValidator from "./usePasswordValidator.js";
 import axios from "../../http/api";
+import { useParams } from "react-router-dom";
 import Loading from "../../Components/Loading";
+import { useHistory } from "react-router-dom";
+import "./resetpassword.css";
 
-import "./signup.css";
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
-function SignUp({token, setToken}) {
-  const [email, setEmail] = useState("");
+function ResetPassword(props) {
+
+  
+  const history = useHistory();
+  
   const [disabled,setDisabled] = useState(false);
-  const [success,setSuccess] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message,setMessage] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-
+  
+  const {uid, token} = useParams();
   useEffect(() => {
     let res = localStorage.getItem("accessToken");
     if (res) {
-      setToken(res);
+      props.setToken(res);
     }
   }, []);
-
+  
   usePasswordValidator({
     min: 8,
     max: 15
   },password,setPassword,passwordError,setPasswordError);
-  useEffect(
-    () => {
-      if (!email) {
-        setEmailError("");
-      } else {
-        if (validateEmail(email)) {
-          setEmailError("");
-        } else {
-          setEmailError("Please enter a valid email.");
-        }
-      }
-    },
-    [email]
-  );
 
   useEffect(
     () => {
@@ -62,25 +53,20 @@ function SignUp({token, setToken}) {
       e.preventDefault();
       setDisabled(true);
       try{
-        const res = await axios.post("/accounts/users/", {
-          email : email,
-          password : password,
-          re_password : confirmPassword
+        const res = await axios.post("/accounts/users/reset_password_confirm/", {
+          new_password : password,
+          re_new_password : confirmPassword,
+          uid: uid,
+          token: token
         })
 
-        setSuccess("An activation email is sent to your email account!")
+        setMessage("Password Reset successfully");
+        await delay(1500)
+        history.push("/login");
         setDisabled(false);
       }
       catch(err){
-        let data = err.response.data
-        if(data.email){
-          setEmailError("Account already exists!");
-        }
-        else if(data.password){
-          setPasswordError(data.password)
-        }
-        setDisabled(false);
-        console.log(err.response.data)
+        setMessage("Invalid Token");
       }
 
 
@@ -88,20 +74,12 @@ function SignUp({token, setToken}) {
   return (
     <div>
       <form>
-        <h3>Please sign up</h3>
-        <input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          type="text"
-          placeholder="Email"
-        />
-        <div className="error">{emailError}</div>
-
+        <h3>Reset Password</h3>
         <input
           value={password}
           onChange={e => setPassword(e.target.value)}
           type="password"
-          placeholder="Password"
+          placeholder="New Password"
         />
         <div className="error">{passwordError}</div>
 
@@ -109,26 +87,25 @@ function SignUp({token, setToken}) {
           value={confirmPassword}
           onChange={e => setConfirmPassword(e.target.value)}
           type="password"
-          placeholder="Confirm Password"
+          placeholder="Confirm New Password"
         />
         <div className="error">{confirmPasswordError}</div>
-       
-        {emailError == "" && passwordError == "" && confirmPasswordError=="" && !disabled ? (
+        {confirmPasswordError == "" && passwordError == "" && !disabled ? (
           <button type="submit" onClick={handleSubmit}>
-            Sign up
+            Reset Password
           </button>
         ) : !disabled ? (
           <button type="submit" disabled>
-            Sign up
+            Reset Password
           </button>
         ) : (
           <Loading />
         )}
         </form>
-        {success!=""?(<h3>{success}</h3>):(<h3></h3>)}
+        {<h3>{message}</h3>}
     </div>
   );
 
 }
 
-export default SignUp;
+export default ResetPassword;

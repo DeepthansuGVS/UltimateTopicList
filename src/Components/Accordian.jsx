@@ -44,7 +44,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-export default function CustomizedAccordions({category,topics,setShowCategory}) {
+export default function CustomizedAccordions({category,topics,setShowCategory,token, setToken, filters, setState}) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -64,7 +64,7 @@ export default function CustomizedAccordions({category,topics,setShowCategory}) 
           <Typography>{category}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Table topics={topics}/>
+          <Table topics={topics} token={token} setToken={setToken} setState={setState} expanded={expanded} filters={filters}/>
         </AccordionDetails>
       </Accordion>
     </div>

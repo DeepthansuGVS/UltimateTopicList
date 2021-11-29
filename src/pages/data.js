@@ -527,3 +527,16 @@ export const categories = [
     "Miscelleneous",
     "Important Links"
 ];
+
+export const showOptions = [
+    {
+        value:"", label:"All"
+    },
+    {
+        value:"true", label:"Only Solved"
+
+    },
+    {
+        value:"false", label:"Only Unsolved"
+    },
+];

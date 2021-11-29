@@ -1,0 +1,107 @@
+h2{
+    color: #2272FF;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.home{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 24px;
+    font-family: system-ui;
+}
+.first{
+    margin-top: 200px;
+    margin-left: 0px;
+    width: 5;
+}
+.content_first{
+    margin-bottom: 50px;
+    
+}
+.second{
+    margin-top: 100px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.third{
+    margin-top: 100px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text{
+    width: 50%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    
+}
+.content{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.border{
+    border: 2px solid black;
+}
+
+table{
+    margin: 10px auto;
+}
+
+.cards{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card{
+    height: 350px;
+    width: 30%;
+}
+
+img{
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+}
+
+.img{
+    overflow: hidden;
+    height: 100%;
+    object-fit: cover;
+}
+
+.data{
+    margin-top: 20px;
+    height: 100px;
+}
+.first_img{
+    height: 300px;
+    object-fit: contain;
+    margin-right: 100px;
+    height: 500px;
+    margin-top: -120px;
+}
+
+.profile_image{
+    object-fit: contain;
+}
+
+.profile{
+    color: rgb(255, 0, 179);
+}
+.orange{
+    color: orange;
+}
+.getstarted{
+    text-decoration: none;
+    color: white;
+}
+.feedback{
+    margin-top: 200px;
+}
+

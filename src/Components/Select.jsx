@@ -1,17 +1,17 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 import AsyncSelect from "react-select/async";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "../http/api.js";
-import {difficultyOptions,categoryOptions} from "../pages/data"
+import { difficultyOptions, categoryOptions, showOptions } from "../pages/data";
 //import { colourOptions } from '../data';
 
 const animatedComponents = makeAnimated();
 
 const getOptions = (value) => {
   return new Promise((resolve, reject) => {
-    if (value.length < 3 && value[0]!='D') {
+    if (value.length < 3 && value[0] != "D") {
       return resolve([]);
     }
 
@@ -30,7 +30,9 @@ const getOptions = (value) => {
   });
 };
 
-export default function AnimatedMulti({ setFilters }) {
+export default function AnimatedMulti({ setFilters, token }) {
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const handleChange = (e) => {
     console.log(e);
     setFilters((prev) => {
@@ -40,6 +42,12 @@ export default function AnimatedMulti({ setFilters }) {
       };
     });
   };
+
+  useEffect(() => {
+    if (token) setLoggedIn(true);
+    else setLoggedIn(false);
+  }, [token]);
+
   const handleDifficultyChange = (e) => {
     console.log(e);
     setFilters((prev) => {
@@ -58,11 +66,22 @@ export default function AnimatedMulti({ setFilters }) {
       };
     });
   };
+  const handleShowChange = (e) => {
+    console.log(e);
+
+    let value = e.value;
+    setFilters((prev) => {
+      return {
+        ...prev,
+        solved: value,
+      };
+    });
+  };
   return (
     <div className="horizontal-select">
       <AsyncSelect
-       className="select async"
-       placeholder="Topics"
+        className="select async"
+        placeholder="Topics"
         cacheOptions
         closeMenuOnSelect={true}
         components={animatedComponents}
@@ -74,8 +93,8 @@ export default function AnimatedMulti({ setFilters }) {
       />
 
       <Select
-      className="select"
-      placeholder="Difficulty"
+        className="select"
+        placeholder="Difficulty"
         closeMenuOnSelect={true}
         components={animatedComponents}
         defaultValue={[]}
@@ -85,8 +104,8 @@ export default function AnimatedMulti({ setFilters }) {
         onChange={handleDifficultyChange}
       />
       <Select
-      className="select"
-      placeholder="Category"
+        className="select"
+        placeholder="Category"
         closeMenuOnSelect={true}
         components={animatedComponents}
         defaultValue={[]}
@@ -95,6 +114,20 @@ export default function AnimatedMulti({ setFilters }) {
         options={categoryOptions}
         onChange={handleCategoryChange}
       />
+      {loggedIn ? (
+        <Select
+          className="select"
+          placeholder="All"
+          closeMenuOnSelect={true}
+          components={animatedComponents}
+          defaultValue={[]}
+          defaultOptions={[]}
+          options={showOptions}
+          onChange={handleShowChange}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

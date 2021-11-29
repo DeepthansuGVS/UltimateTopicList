@@ -1,50 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopicList from "./pages/Topics/TopicList";
-import { Route, Link, BrowserRouter, Switch } from "react-router-dom";
+import {
+  Route,
+  Link,
+  BrowserRouter,
+  Switch,
+  NavLink,
+  Redirect,
+} from "react-router-dom";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import Activate from "./pages/Activate/Activate";
+import SendActivation from "./pages/SendActivation/SendActivation";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Navbar from "./Components/Navbar";
+import Home from "./pages/Home/Home";
+import axios from "./http/api"
 
 function App() {
+  const [token, setToken] = useState(null);
+
+  
+  useEffect(() => {
+    const check = async () =>{
+      try{
+        const res = await axios.post("/accounts/jwt/verify",{
+          token
+        });
+        setToken(token);
+      }
+      catch(err){
+        setToken(null);
+        console.log(err.message);
+      }
+    }
+    check();
+  }, []);
+
   return (
     <BrowserRouter>
       <switch>
         <div className="App">
-        <Route path="/topics" component={TopicList}></Route>
-          <Route path="/signup" component={SignUp}></Route>
-          <Route path="/login" component={Login}></Route>
-          <Route path="/activate/:uid/:token" component={Activate}></Route>
+          <Navbar token={token} setToken={setToken} />
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/topics">
+            <TopicList token={token} setToken={setToken} />
+          </Route>
+          <Route path="/signup">
+            {token ? <Redirect to="/" /> : <SignUp />}
+          </Route>
+          <Route path="/login">
+            <Login token={token} setToken={setToken} />
+          </Route>
+          <Route path="/activate/:uid/:token">
+            <Activate token={token} setToken={setToken} />
+          </Route>
+          <Route path="/reactivate">
+            <SendActivation />
+          </Route>
+          <Route path="/resetpassword">
+            <ForgotPassword token={token} setToken={setToken} />
+          </Route>
+          <Route path="/password/reset/confirm/:uid/:token">
+            <ResetPassword token={token} setToken={setToken} />
+          </Route>
         </div>
       </switch>
-      <div style={{ position: "fixed", bottom: 5, right: 10 }}>
-        Data Credits to{" "}
-        <a
-          style={{ color: "#FB8C28" }}
-          target="blank"
-          href="https://codeforces.com/blog/entry/95106"
-        >
-          YouKnowWho@Codeforces
-        </a>
-      </div>
-
-      <div style={{ position: "fixed", bottom: 5, left: 10 }}>
-        Site Credits to{" "}
-        <a
-          style={{ color: "cyan" }}
-          target="blank"
-          href="https://codeforces.com/profile/zenitsu101"
-        >
-          zenitsu101@Codeforces
-        </a>
-        ,{" "}
-        <a
-          style={{ color: "darkblue" }}
-          target="blank"
-          href="https://github.com/DeepthansuGVS"
-        >
-          DeepthansuGVS@Github
-        </a>
-      </div>
     </BrowserRouter>
   );
 }

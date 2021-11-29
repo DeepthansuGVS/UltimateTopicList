@@ -30,25 +30,29 @@ instance.interceptors.request.use(
   async (err) => {
     const originalConfig = err.config;
   
-    if (originalConfig.url !== "/accounts/jwt/create/" && err.response) {
+    if (originalConfig.url !== "/accounts/jwt/create" && err.response) {
       // Access Token was expired
+      console.log(originalConfig.url);
       let refreshToken = localStorage.getItem("refreshToken")
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
   
         try {
-          const rs = await instance.get("accounts/jwt/refresh/",{
-              withCredentials:true,
-          }, {
+          const rs = await instance.post("/accounts/jwt/refresh/",
+          {
               refresh : refreshToken
           });
   
           const { access } = rs.data;
+          console.log(rs.data);
+
           localStorage.setItem("accessToken",access)
   
           return instance(originalConfig);
         } catch (_error) {
-            window.location.pathname="/login"
+            // if(window.location.pathname!="/login"){
+            //   window.location.pathname="/login";
+            // }
           return Promise.reject(_error);
         }
       }

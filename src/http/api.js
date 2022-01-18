@@ -34,7 +34,7 @@ instance.interceptors.request.use(
       // Access Token was expired
       console.log(originalConfig.url);
       let refreshToken = localStorage.getItem("refreshToken")
-      if (err.response.status === 401 && !originalConfig._retry) {
+      if ((err.response.status === 401 || err.response.status === 400) && !originalConfig._retry) {
         originalConfig._retry = true;
   
         try {
@@ -50,9 +50,10 @@ instance.interceptors.request.use(
   
           return instance(originalConfig);
         } catch (_error) {
-            // if(window.location.pathname!="/login"){
-            //   window.location.pathname="/login";
-            // }
+          localStorage.clear();
+            if(window.location.pathname!="/login"){
+              window.location.pathname="/login";
+            }
           return Promise.reject(_error);
         }
       }

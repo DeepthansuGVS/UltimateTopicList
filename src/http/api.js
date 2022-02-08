@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const Mode = "LocalHost";
+const baseURL = (Mode == "LocalHost" ? "http://localhost:8000/api" : "https://ultimate-topic-list.herokuapp.com/api");
+
 const instance = axios.create({
-  baseURL: "https://ultimate-topic-list.herokuapp.com/api",
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -30,15 +33,21 @@ instance.interceptors.request.use(
   async (err) => {
     const originalConfig = err.config;
   
-    if (originalConfig.url !== "/accounts/jwt/create" && err.response) {
+    if (originalConfig.url !== "/jwt/create" && err.response) {
       // Access Token was expired
       console.log(originalConfig.url);
       let refreshToken = localStorage.getItem("refreshToken")
-      if ((err.response.status === 401 || err.response.status === 400) && !originalConfig._retry) {
+      if(refreshToken == null){
+        refreshToken = "abc";
+      }
+      console.log(err.response.status);
+      console.log(originalConfig._retry);
+      if (err.response.status === 401 && !originalConfig._retry) {
+        console.log("Inside");
         originalConfig._retry = true;
-  
+        
         try {
-          const rs = await instance.post("/accounts/jwt/refresh/",
+          const rs = await axios.post("/accounts/jwt/refresh/",
           {
               refresh : refreshToken
           });
@@ -50,10 +59,11 @@ instance.interceptors.request.use(
   
           return instance(originalConfig);
         } catch (_error) {
+          console.log("Hello");
           localStorage.clear();
-            if(window.location.pathname!="/login"){
-              window.location.pathname="/login";
-            }
+            // if(window.location.pathname!="/login"){
+            //   window.location.pathname="/login";
+            // }
           return Promise.reject(_error);
         }
       }

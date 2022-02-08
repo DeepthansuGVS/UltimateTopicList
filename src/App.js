@@ -19,16 +19,14 @@ import Home from "./pages/Home/Home";
 import axios from "./http/api"
 
 function App() {
-  const [token, setToken] = useState(null);
-
+  const [token, setToken] = useState(localStorage.getItem("accessToken"));
   
   useEffect(() => {
     const check = async () =>{
       try{
         const res = await axios.post("/accounts/jwt/verify",{
-          token
+          token : token || "abc"
         });
-        setToken(token);
       }
       catch(err){
         setToken(null);
@@ -50,7 +48,7 @@ function App() {
             <TopicList token={token} setToken={setToken} />
           </Route>
           <Route path="/signup">
-            {token ? <Redirect to="/" /> : <SignUp />}
+            {token ? <Redirect to="/" /> : <SignUp token={token} setToken={setToken}/>}
           </Route>
           <Route path="/login">
             <Login token={token} setToken={setToken} />

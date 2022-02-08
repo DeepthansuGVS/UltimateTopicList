@@ -1,7 +1,14 @@
 import axios from "axios";
 
-const Mode = "LocalHost";
+const Mode = "Production";
 const baseURL = (Mode == "LocalHost" ? "http://localhost:8000/api" : "https://ultimate-topic-list.herokuapp.com/api");
+const temp = axios.create({
+  baseURL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true
+})
 
 const instance = axios.create({
   baseURL,
@@ -47,7 +54,7 @@ instance.interceptors.request.use(
         originalConfig._retry = true;
         
         try {
-          const rs = await axios.post("/accounts/jwt/refresh/",
+          const rs = await temp.post("/accounts/jwt/refresh/",
           {
               refresh : refreshToken
           });
@@ -61,9 +68,7 @@ instance.interceptors.request.use(
         } catch (_error) {
           console.log("Hello");
           localStorage.clear();
-            // if(window.location.pathname!="/login"){
-            //   window.location.pathname="/login";
-            // }
+          if(window.location.pathname == '/topics')window.location.pathname="/login";
           return Promise.reject(_error);
         }
       }

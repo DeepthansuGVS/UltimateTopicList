@@ -91,7 +91,7 @@ function Login({token, setToken}) {
             const res = await axios.post("/accounts/users/resend_activation/", {
               email,
             });
-            setMessage(`email sent successfully`);
+            setMessage(`Account not activated, an email is sent for verification!`);
           } catch (err) {
             setMessage(`Oops try after sometime!`);
           }

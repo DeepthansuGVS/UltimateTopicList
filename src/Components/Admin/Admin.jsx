@@ -16,8 +16,8 @@ export default function Admin() {
     const fetchData = async () => {
         try{
             //api enter here
-            const res = await axios.get("/topics/list");
-            setData(res);
+            const res = await axios.get("/accounts/users_list/");
+            setData(res.data);
         }
         catch(err){
             console.log(err.message)
@@ -28,6 +28,10 @@ export default function Admin() {
         fetchData();
     }, [])
 
+
+    React.useEffect(()=>{
+      console.log(data);
+    },[data])
    
 
   
@@ -83,21 +87,22 @@ export default function Admin() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableBody>
             
-            {data.map(({userId, email, isActive}, idx) => {
+            {data.map(({id, email, is_active}, idx) => {
               return (
                 <TableRow>
                   <TableCell align="center" width="30%">
-                  {userId}
+                  {id}
                 </TableCell>
                 <TableCell align="center" width="30%">
-                  {userId}
+                  {email}
                 </TableCell>
                 <TableCell align="center" width="30%">
-                  {userId}
+                  {is_active?"True":"False"}
                 </TableCell>
               </TableRow>
               )
             })}
+           
           </TableBody>
         </Table>
       </div>

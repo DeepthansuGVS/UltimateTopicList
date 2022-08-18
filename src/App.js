@@ -17,6 +17,7 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Navbar from "./Components/Navbar";
 import Home from "./pages/Home/Home";
 import axios from "./http/api"
+import Admin from "./Components/Admin/Admin"
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
@@ -65,6 +66,7 @@ function App() {
           <Route path="/password/reset/confirm/:uid/:token">
             <ResetPassword token={token} setToken={setToken} />
           </Route>
+          <Route path="/admin"><Admin/></Route>
         </div>
       </switch>
     </BrowserRouter>
